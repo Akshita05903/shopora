@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# env files
+.env
+
+# build output
+dist/
+build/
+
+# logs
+logs
+*.log
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# React/Vite
+client/dist/
+client/build/Remove-Item -Recurse -Force .git
