@@ -7,10 +7,12 @@ const {
   getProductById,
 } = require("../controllers/productController");
 
+const protect = require("../middleware/authMiddleware");
+
 // Add Product
 router.post("/", addProduct);
 
-// Get All Products
+// Get All Products (Protected for testing)
 router.get("/", getProducts);
 
 // Get Single Product
