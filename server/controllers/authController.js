@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../models/user"); // Change to "../models/User" if you rename the file to User.js
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -13,6 +13,7 @@ const registerUser = async (req, res) => {
       });
     }
 
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -21,8 +22,10 @@ const registerUser = async (req, res) => {
       });
     }
 
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Create user
     const user = await User.create({
       name,
       email,
@@ -37,9 +40,9 @@ const registerUser = async (req, res) => {
         email: user.email,
       },
     });
-
   } catch (error) {
     console.log(error);
+
     res.status(500).json({
       message: "Server Error",
     });
@@ -57,6 +60,7 @@ const loginUser = async (req, res) => {
       });
     }
 
+    // Find user
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -65,6 +69,7 @@ const loginUser = async (req, res) => {
       });
     }
 
+    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -73,6 +78,7 @@ const loginUser = async (req, res) => {
       });
     }
 
+    // Generate JWT
     const token = jwt.sign(
       {
         id: user._id,
@@ -93,9 +99,9 @@ const loginUser = async (req, res) => {
         email: user.email,
       },
     });
-
   } catch (error) {
     console.log(error);
+
     res.status(500).json({
       message: "Server Error",
     });
